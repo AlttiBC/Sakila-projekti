@@ -1,0 +1,32 @@
+<%- include('head', { sivu: 'Etusivu' }) %>
+<main>
+    <div id="elokuvat">
+        <h2>Elokuvat</h2>
+        <div id="elokuvakortit">
+            <% for(const elokuva of elokuvat) { %>
+                <div class="elokuvakortti">
+                    <div class="flex">
+                        <h3><%= elokuva.title %></h3>
+                        <p><%= elokuva.rental_rate %>€ / <%= elokuva.rental_duration %> päivää</p>
+                    </div>
+                    <div class="flex">
+                        <p><%= elokuva.category_name %></p>
+                        <p><%= elokuva.rating %></p>
+                    </div>
+                    <p><%= elokuva.description %></p>
+                </div>
+            <% } %>
+        </div>
+    </div>
+    <div id="kategoriat">
+        <h2>Kategoriat</h2>
+        <div id="kategoriakortit">
+            <% for(const kategoria of kategoriat) { %>
+                <div class="kategoriakortti">
+                    <a href="/elokuvat?category=<%= kategoria.category_id %>"><button><%= kategoria.name %></button></a>
+                </div>
+            <% } %>
+        </div>
+    </div>
+</main>
+<%- include('footer') %>
