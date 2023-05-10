@@ -1,20 +1,41 @@
 :root {
-    --ottsikko-fontti: 'Teko', sans-serif;
-    --leipateksti: 'Lato', sans-serif;
-    --vari1: #92010c;
-    --vari2: #20aad8;
-    --vari3: #373435;
-    --vari4: #ffff;
+    --väri1: #92010c;
+    --väri2: #20aad8;
+    --väri3: #373435;
+    --väri4: #ffffff;
+    --otsikko-fontti: 'Lato', sans-serif;
+    --leipäteksti-fontti: 'Teko', sans-serif;
 }
 
 body {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: var(--leipäteksti-fontti);
+    color: var(--väri4);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--otsikko-fontti);
 }
 
 header {
+    background-color: var(--väri1);
     display: flex;
     justify-content: space-between;
     padding: 0.5em;
+}
+
+header img {
+    border-radius: 50%;
+}
+
+header > div {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+nav {
+    display: flex;
+    align-items: center;
 }
 
 ul {
@@ -25,20 +46,21 @@ ul {
 nav > ul > a {
     margin: 3px;
     padding: 10px;
+    color: var(--leipäteksti-fontti);
     text-decoration: none;
 }
 
 main {
     margin: 2em;
     padding: 1em;
-    background-color: rgb(159, 159, 159);
+    background-color: var(--väri1);
 }
 
 aside {
     margin: 0.1em;
     margin-top: 2em;
     padding: 1em;
-    background-color: rgb(159, 159, 159);
+    background-color: var(--väri1);
 }
 
 #elokuvakortit {
@@ -49,14 +71,14 @@ aside {
 }
 
 .elokuvakortti {
-    background-color: whitesmoke;
+    background-color: var(--väri2);
     width: 35%;
     padding: 15px;
     margin: 20px;
 }
 
 .elokuvakortti > p {
-    background-color: rgb(159, 159, 159, 0.498);
+    background-color: rgba(159, 159, 159, 0.498);
     padding: 20px;
 }
 
@@ -83,4 +105,18 @@ aside {
 .kategoriakortti button:hover {
     background-color: rgba(255, 255, 255, 0.789);
     cursor: pointer;
+}
+
+#sivutus {
+    display: flex;
+    border-radius: 8px;
+    gap: 15px;
+    width: fit-content;
+    background-color: var(--väri2);
+}
+#sivutus a {
+    padding: 10px;
+    text-decoration: none;
+    color: var(--väri4);
+    width: 100%;
 }
