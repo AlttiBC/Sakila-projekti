@@ -1,0 +1,13 @@
+<%- include('head', { sivu: 'Näyttelijät' }) %>
+<main>
+    <div id="näyttelijät" style="width: 100%;">
+        <div id="näyttelijäkortit">
+            <% for(const nayttelija of nayttelijat) { %>
+                <a href="/elokuvat?nayttelija=<%= nayttelija.actor_id %>">
+                    <p><%= nayttelija.first_name %> <%= nayttelija.last_name %></p>
+                </a>
+            <% } %>
+        </div>
+    </div>
+</main>
+<%- include('footer') %>

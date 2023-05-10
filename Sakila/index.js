@@ -58,6 +58,30 @@ app.get('/elokuvat', async (req, res) => {
         ON film_category.category_id = category.category_id
         WHERE film_category.category_id = ${req.query.category}; 
         `);
+    } else if (req.query.nayttelija) {
+        elokuvat = await connection.query(`
+        SELECT category.name AS category_name, title, description, release_year, rental_duration, rental_rate, rating 
+        FROM film
+        INNER JOIN film_category
+        ON film.film_id = film_category.film_id  
+        INNER JOIN category
+        ON film_category.category_id = category.category_id
+        INNER JOIN film_actor
+        ON film.film_id = film_actor.film_id
+        INNER JOIN actor
+        ON film_actor.actor_id = actor.actor_id
+        WHERE film_actor.actor_id = ${req.query.nayttelija}
+        LIMIT 20
+        OFFSET ${req.query.page * req.query.limit - req.query.limit}; 
+        `);
+        elokuvatmaara = await connection.query(`
+        SELECT COUNT(*) as count FROM film
+        INNER JOIN film_actor
+        ON film.film_id = film_actor.film_id
+        INNER JOIN actor
+        ON film_actor.actor_id = actor.actor_id
+        WHERE film_actor.actor_id = ${req.query.nayttelija}
+        `);
     } else {
         elokuvat = await connection.query(`
         SELECT category.name AS category_name, title, description, release_year, rental_duration, rental_rate, rating 
@@ -113,8 +137,17 @@ app.get('/haku', async (req, res) => {
     connection.end();
 });
 
-app.get('/näyttelijät', (req, res) => {
-    res.render('nayttelijat')
+app.get('/nayttelijat', async (req, res) => {
+    const connection = await mariadb.createConnection(dbconfig);
+    
+    const nayttelijat = await connection.query(`
+    SELECT actor_id, first_name, last_name 
+    FROM actor 
+    `);
+    
+    res.render('nayttelijat', { nayttelijat });
+    
+    connection.end();
 });
 
 app.get('/kategoriat/:id', (req, res) => {

@@ -85,6 +85,13 @@ aside {
     justify-content: center;
 }
 
+#elokuvakortit a {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
 .elokuvakortti {
     background-color: var(--väri2);
     width: 35%;
@@ -92,8 +99,29 @@ aside {
     margin: 20px;
 }
 
-.elokuvakortti > p {
+#näyttelijäkortit {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+#näyttelijäkortit > a {
+    color: var(--väri4);
+    text-decoration: none;
+    align-items: center;
+    background-color: var(--väri2);
+    width: 35%;
+    padding: 10px;
+    margin: 15px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+}
+
+#näyttelijäkortit > a > p {
     background-color: rgba(159, 159, 159, 0.498);
+    width: 100%;
     padding: 20px;
 }
 
