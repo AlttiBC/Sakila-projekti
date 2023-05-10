@@ -1,3 +1,12 @@
+:root {
+    --ottsikko-fontti: 'Teko', sans-serif;
+    --leipateksti: 'Lato', sans-serif;
+    --vari1: #92010c;
+    --vari2: #20aad8;
+    --vari3: #373435;
+    --vari4: #ffff;
+}
+
 body {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
@@ -47,7 +56,7 @@ aside {
 }
 
 .elokuvakortti > p {
-    background-color: rgba(159, 159, 159, 0.498);
+    background-color: rgb(159, 159, 159, 0.498);
     padding: 20px;
 }
 

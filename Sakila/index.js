@@ -33,7 +33,7 @@ app.get('/elokuvat', async (req, res) => {
     const connection = await mariadb.createConnection(dbconfig);
     
     let elokuvat;
-    if(req.query.category) {
+    if (req.query.category) {
         elokuvat = await connection.query(`
         SELECT category.name AS category_name, title, description, release_year, rental_duration, rental_rate, rating 
         FROM film
@@ -42,6 +42,7 @@ app.get('/elokuvat', async (req, res) => {
         INNER JOIN category
         ON film_category.category_id = category.category_id
         WHERE film_category.category_id = ${req.query.category}
+        ORDER BY title
         LIMIT 20;
         `);
     } else {
@@ -52,6 +53,7 @@ app.get('/elokuvat', async (req, res) => {
         ON film.film_id = film_category.film_id  
         INNER JOIN category
         ON film_category.category_id = category.category_id
+        ORDER BY title
         LIMIT 20;
         `);
     }

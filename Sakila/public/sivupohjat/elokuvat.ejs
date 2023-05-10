@@ -4,11 +4,14 @@
         <h2>Kategoriat</h2>
         <div id="kategoriat">
             <div id="kategoriakortit">
+                <div class="kategoriakortti">
+                    <a href="/elokuvat"><button> - </button></a>
+                </div>
                 <% for(const kategoria of kategoriat) { %>
                     <div class="kategoriakortti">
                         <a href="/elokuvat?category=<%= kategoria.category_id %>"><button><%= kategoria.name %></button></a>
                     </div>
-                    <% } %>
+                <% } %>
                 </div>
         </div>
     </aside>
