@@ -37,9 +37,7 @@ app.get('/elokuvat', async (req, res) => {
     const connection = await mariadb.createConnection(dbconfig);
 
     let elokuvat;
-    const elokuvatmaara = await connection.query(`
-    SELECT COUNT(*) as count FROM film; 
-    `);
+    let elokuvatmaara;
     if(req.query.category) {
         elokuvat = await connection.query(`
         SELECT category.name AS category_name, title, description, release_year, rental_duration, rental_rate, rating 
@@ -49,8 +47,16 @@ app.get('/elokuvat', async (req, res) => {
         INNER JOIN category
         ON film_category.category_id = category.category_id
         WHERE film_category.category_id = ${req.query.category}
-        OFFSET ${req.query.page * req.query.limit} 
-        LIMIT 20 ROWS;
+        LIMIT 20
+        OFFSET ${req.query.page * req.query.limit - req.query.limit}; 
+        `);
+        elokuvatmaara = await connection.query(`
+        SELECT COUNT(*) as count FROM film
+        INNER JOIN film_category
+        ON film.film_id = film_category.film_id  
+        INNER JOIN category
+        ON film_category.category_id = category.category_id
+        WHERE film_category.category_id = ${req.query.category}; 
         `);
     } else {
         elokuvat = await connection.query(`
@@ -61,13 +67,49 @@ app.get('/elokuvat', async (req, res) => {
         INNER JOIN category
         ON film_category.category_id = category.category_id
         LIMIT 20
-        OFFSET ${req.query.page * req.query.limit};
+        OFFSET ${req.query.page * req.query.limit - req.query.limit};
+        `);
+        elokuvatmaara = await connection.query(`
+        SELECT COUNT(*) as count FROM film; 
         `);
     }
     const kategoriat = await connection.query(`SELECT name, category_id FROM category;`)
+    const sivumaara = Math.floor(Number(elokuvatmaara[0].count) / 20);
+
+    res.render('elokuvat', { elokuvat, kategoriat, sivumaara, pages: paginate.getArrayPages(req)(1, sivumaara, req.query.page) });
+    connection.end();
+});
+
+app.get('/haku', async (req, res) => {
+    const search = req.query.haku;
+
+    if (!search || !search[0]) return res.redirect('/');
+    const connection = await mariadb.createConnection(dbconfig);
+
+    const elokuvatmaara = await connection.query(`
+    SELECT COUNT(*) as count 
+    FROM film 
+    WHERE (title LIKE '%${search}%'); 
+    `);
+    const elokuvat = await connection.query(`SELECT category.name AS category_name, title, description, release_year, rental_duration, rental_rate, rating 
+    FROM film 
+    INNER JOIN film_category
+    ON film.film_id = film_category.film_id  
+    INNER JOIN category
+    ON film_category.category_id = category.category_id
+    WHERE (title LIKE '%${search}%')
+    LIMIT 20
+    OFFSET ${req.query.page * req.query.limit - req.query.limit};
+    `);
+    const kategoriat = await connection.query(`
+    SELECT name, category_id 
+    FROM category
+    WHERE (name LIKE '%${search}%');
+    `);
     const sivumaara = Number(elokuvatmaara[0].count) / 20;
 
-    res.render('elokuvat', { elokuvat, kategoriat, pages: paginate.getArrayPages(req)(1, sivumaara, req.query.page) });
+    res.render('elokuvat', { elokuvat, kategoriat, sivumaara, pages: paginate.getArrayPages(req)(1, sivumaara, req.query.page) });
+    
     connection.end();
 });
 

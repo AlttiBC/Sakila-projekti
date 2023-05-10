@@ -27,6 +27,21 @@ header img {
     border-radius: 50%;
 }
 
+header form {
+    display: flex;
+}
+
+header input {
+    border-radius: 8px 0 0 8px;
+    border: none;
+}
+
+header button {
+    border-radius: 0 8px 8px 0;
+    border: none;
+}
+
+
 header > div {
     display: flex;
     gap: 12px;
