@@ -12,21 +12,22 @@
             </div>
         </div>
     </aside>
-    <% if (elokuvat.length > 0) { %>
     <main>
         <h2>Elokuvat</h2>
-        <% if (paginate.hasPreviousPages || paginate.hasNextPages(sivumaara)) { %>
-            <div id="sivutus">
-                <% if (paginate.hasPreviousPages) { %>
-                <a href="<%= paginate.href(true) %>"> < </a>
-                <% } %>
-                <% pages.forEach((page) => { %>
-                    <a href="<%= page.url %>" class="<%= paginate.page == page.number ? 'active' : ''%>"><%= page.number %></a>
-                <% }) %>
-                <% if (paginate.hasNextPages(sivumaara)) { %>
-                <a href="<%= paginate.href() %>"> > </a>
-                <% } %>
-            </div>
+        <% if (elokuvat.length > 0) { %>
+            <% if (paginate.hasPreviousPages || paginate.hasNextPages(sivumaara)) { %>
+                <div id="sivutus">
+                    <% if (paginate.hasPreviousPages) { %>
+                    <a href="<%= paginate.href(true) %>"> < </a>
+                    <% } %>
+                    <% pages.forEach((page) => { %>
+                        <a href="<%= page.url %>" class="<%= paginate.page == page.number ? 'active' : ''%>"><%= page.number %></a>
+                    <% }) %>
+                    <% if (paginate.hasNextPages(sivumaara)) { %>
+                    <a href="<%= paginate.href() %>"> > </a>
+                    <% } %>
+                </div>
+            <% } %>
         <% } %>
         <div id="elokuvat" style="width: 100%;">
             <div id="elokuvakortit">
@@ -45,23 +46,21 @@
                 <% } %>
             </div>
         </div>
-        <% if (paginate.hasPreviousPages || paginate.hasNextPages(sivumaara)) { %>
-            <div id="sivutus">
-                <% if (paginate.hasPreviousPages) { %>
-                <a href="<%= paginate.href(true) %>"> < </a>
-                <% } %>
-                <% pages.forEach((page) => { %>
-                    <a href="<%= page.url %>" class="<%= paginate.page == page.number ? 'active' : ''%>"><%= page.number %></a>
-                <% }) %>
-                <% if (paginate.hasNextPages(sivumaara)) { %>
-                <a href="<%= paginate.href() %>"> > </a>
-                <% } %>
-            </div>
+        <% if (elokuvat.length > 0) { %>
+            <% if (paginate.hasPreviousPages || paginate.hasNextPages(sivumaara)) { %>
+                <div id="sivutus">
+                    <% if (paginate.hasPreviousPages) { %>
+                    <a href="<%= paginate.href(true) %>"> < </a>
+                    <% } %>
+                    <% pages.forEach((page) => { %>
+                        <a href="<%= page.url %>" class="<%= paginate.page == page.number ? 'active' : ''%>"><%= page.number %></a>
+                    <% }) %>
+                    <% if (paginate.hasNextPages(sivumaara)) { %>
+                    <a href="<%= paginate.href() %>"> > </a>
+                    <% } %>
+                </div>
+            <% } %>
         <% } %>
     </main>
-    <% } %>
-
-    
-
 </div>
 <%- include('footer') %>

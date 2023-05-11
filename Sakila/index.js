@@ -25,6 +25,7 @@ app.get('/', async (req, res) => {
     ON film.film_id = film_category.film_id  
     INNER JOIN category
     ON film_category.category_id = category.category_id 
+    ORDER BY title
     LIMIT 6;
     `);
     const kategoriat = await connection.query(`SELECT name, category_id FROM category LIMIT 6;`)
@@ -47,6 +48,7 @@ app.get('/elokuvat', async (req, res) => {
         INNER JOIN category
         ON film_category.category_id = category.category_id
         WHERE film_category.category_id = ${req.query.category}
+        ORDER BY title
         LIMIT 20
         OFFSET ${req.query.page * req.query.limit - req.query.limit}; 
         `);
@@ -71,6 +73,7 @@ app.get('/elokuvat', async (req, res) => {
         INNER JOIN actor
         ON film_actor.actor_id = actor.actor_id
         WHERE film_actor.actor_id = ${req.query.nayttelija}
+        ORDER BY title
         LIMIT 20
         OFFSET ${req.query.page * req.query.limit - req.query.limit}; 
         `);
@@ -90,6 +93,7 @@ app.get('/elokuvat', async (req, res) => {
         ON film.film_id = film_category.film_id  
         INNER JOIN category
         ON film_category.category_id = category.category_id
+        ORDER BY title
         LIMIT 20
         OFFSET ${req.query.page * req.query.limit - req.query.limit};
         `);
