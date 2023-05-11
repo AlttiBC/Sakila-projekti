@@ -163,3 +163,19 @@ aside {
     color: var(--väri4);
     width: 100%;
 }
+
+#palaaetusivulle button {
+    color: var(--väri4);
+    font-size: 18px;
+    background-color: var(--väri2);
+    border-radius: 8px;
+    border: none;
+    padding: 20px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+#palaaetusivulle button:hover {
+    cursor: pointer;
+    opacity: 0.85;
+}
