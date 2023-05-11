@@ -1,6 +1,21 @@
 <%- include('head', { sivu: 'Näyttelijät' }) %>
 <main>
     <div id="näyttelijät" style="width: 100%;">
+        <% if (nayttelijat.length > 0) { %>
+            <% if (paginate.hasPreviousPages || paginate.hasNextPages(sivumaara)) { %>
+                <div id="sivutus">
+                    <% if (paginate.hasPreviousPages) { %>
+                    <a href="<%= paginate.href(true) %>"> < </a>
+                    <% } %>
+                    <% pages.forEach((page) => { %>
+                        <a href="<%= page.url %>" class="<%= paginate.page == page.number ? 'active' : ''%>"><%= page.number %></a>
+                    <% }) %>
+                    <% if (paginate.hasNextPages(sivumaara)) { %>
+                    <a href="<%= paginate.href() %>"> > </a>
+                    <% } %>
+                </div>
+            <% } %>
+        <% } %>
         <div id="näyttelijäkortit">
             <% for(const nayttelija of nayttelijat) { %>
                 <a href="/elokuvat?nayttelija=<%= nayttelija.actor_id %>">
@@ -8,6 +23,21 @@
                 </a>
             <% } %>
         </div>
+        <% if (nayttelijat.length > 0) { %>
+            <% if (paginate.hasPreviousPages || paginate.hasNextPages(sivumaara)) { %>
+                <div id="sivutus">
+                    <% if (paginate.hasPreviousPages) { %>
+                    <a href="<%= paginate.href(true) %>"> < </a>
+                    <% } %>
+                    <% pages.forEach((page) => { %>
+                        <a href="<%= page.url %>" class="<%= paginate.page == page.number ? 'active' : ''%>"><%= page.number %></a>
+                    <% }) %>
+                    <% if (paginate.hasNextPages(sivumaara)) { %>
+                    <a href="<%= paginate.href() %>"> > </a>
+                    <% } %>
+                </div>
+            <% } %>
+        <% } %>
     </div>
 </main>
 <%- include('footer') %>

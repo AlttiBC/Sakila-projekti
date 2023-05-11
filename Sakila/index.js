@@ -75,7 +75,7 @@ app.get('/elokuvat', async (req, res) => {
         WHERE film_actor.actor_id = ${req.query.nayttelija}
         ORDER BY title
         LIMIT 20
-        OFFSET ${req.query.page * req.query.limit - req.query.limit}; 
+        OFFSET ${req.query.page * req.query.limit - req.query.limit};
         `);
         elokuvatmaara = await connection.query(`
         SELECT COUNT(*) as count FROM film
@@ -146,10 +146,18 @@ app.get('/nayttelijat', async (req, res) => {
     
     const nayttelijat = await connection.query(`
     SELECT actor_id, first_name, last_name 
-    FROM actor 
+    FROM actor
+    LIMIT 20
+    OFFSET ${req.query.page * req.query.limit - req.query.limit};
     `);
-    
-    res.render('nayttelijat', { nayttelijat });
+    const nayttelijamaara = await connection.query(`
+    SELECT COUNT(*) as count
+    FROM actor
+    `)
+    const sivumaara = Number(nayttelijamaara[0].count) / 20;
+console.log(sivumaara)    
+console.log(Number(nayttelijamaara[0].count))    
+    res.render('nayttelijat', { nayttelijat, sivumaara, pages: paginate.getArrayPages(req)(1, sivumaara, req.query.page)});
     
     connection.end();
 });
