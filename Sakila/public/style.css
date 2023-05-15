@@ -245,7 +245,7 @@ aside {
 }
 #katsolisaa {
     color: var(--väri4);
-    background-color: rgba(159, 159, 159, 0.827);
+    background-color: rgba(78, 109, 151, 0.827);
     font-size: .975rem;
     font-weight: 400;
     align-items: center;
@@ -257,5 +257,5 @@ aside {
 }
 
 #katsolisaa:hover {
-    background-color: rgba(159, 159, 159, 0.627);
+    background-color: rgba(78, 108, 151, 0.462);
 }
