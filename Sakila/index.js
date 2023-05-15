@@ -186,10 +186,6 @@ app.get('/elokuva/:id', async (req, res) => {
     WHERE film_actor.film_id = ${elokuvaid};
     `)
 
-    console.log(nayttelijat)
-
-    console.log(elokuvat)
-
     res.render('elokuva', { elokuva: elokuvat[0], nayttelijat });
     
     connection.end();
