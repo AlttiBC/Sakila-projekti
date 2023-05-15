@@ -3,7 +3,7 @@ const dbconfig = require('./config.json');
 const mariadb = require('mariadb');
 const path = require('path');
 const app = express();
-const paginate = require("express-paginate");
+const paginate = require('express-paginate');
 
 app.use(express.static(__dirname + '/public'));
 app.use(express.json());
@@ -127,6 +127,7 @@ app.get('/haku', async (req, res) => {
     INNER JOIN category
     ON film_category.category_id = category.category_id
     WHERE (title LIKE '%${search}%')
+    ORDER BY title
     LIMIT 20
     OFFSET ${req.query.page * req.query.limit - req.query.limit};
     `);
