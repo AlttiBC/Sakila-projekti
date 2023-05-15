@@ -19,7 +19,7 @@ app.get('/', async (req, res) => {
     const connection = await mariadb.createConnection(dbconfig);
 
     const elokuvat = await connection.query(`
-    SELECT category.name AS category_name, title, description, release_year, rental_duration, rental_rate, rating 
+    SELECT category.name AS category_name, title, description, release_year, rental_duration, rental_rate, rating, film.film_id
     FROM film
     INNER JOIN film_category
     ON film.film_id = film_category.film_id  
@@ -41,7 +41,7 @@ app.get('/elokuvat', async (req, res) => {
     let elokuvatmaara;
     if(req.query.category) {
         elokuvat = await connection.query(`
-        SELECT category.name AS category_name, title, description, release_year, rental_duration, rental_rate, rating 
+        SELECT category.name AS category_name, title, description, release_year, rental_duration, rental_rate, rating, film.film_id
         FROM film
         INNER JOIN film_category
         ON film.film_id = film_category.film_id  
@@ -62,7 +62,7 @@ app.get('/elokuvat', async (req, res) => {
         `);
     } else if (req.query.nayttelija) {
         elokuvat = await connection.query(`
-        SELECT category.name AS category_name, title, description, release_year, rental_duration, rental_rate, rating 
+        SELECT category.name AS category_name, title, description, release_year, rental_duration, rental_rate, rating, film.film_id
         FROM film
         INNER JOIN film_category
         ON film.film_id = film_category.film_id  
@@ -87,7 +87,7 @@ app.get('/elokuvat', async (req, res) => {
         `);
     } else {
         elokuvat = await connection.query(`
-        SELECT category.name AS category_name, title, description, release_year, rental_duration, rental_rate, rating 
+        SELECT category.name AS category_name, title, description, release_year, rental_duration, rental_rate, rating, film.film_id
         FROM film
         INNER JOIN film_category
         ON film.film_id = film_category.film_id  
@@ -119,7 +119,8 @@ app.get('/haku', async (req, res) => {
     FROM film 
     WHERE (title LIKE '%${search}%'); 
     `);
-    const elokuvat = await connection.query(`SELECT category.name AS category_name, title, description, release_year, rental_duration, rental_rate, rating 
+    const elokuvat = await connection.query(`
+    SELECT category.name AS category_name, title, description, release_year, rental_duration, rental_rate, rating, film.film_id 
     FROM film 
     INNER JOIN film_category
     ON film.film_id = film_category.film_id  
@@ -155,15 +156,43 @@ app.get('/nayttelijat', async (req, res) => {
     FROM actor
     `)
     const sivumaara = Number(nayttelijamaara[0].count) / 20;
-console.log(sivumaara)    
-console.log(Number(nayttelijamaara[0].count))    
+
     res.render('nayttelijat', { nayttelijat, sivumaara, pages: paginate.getArrayPages(req)(1, sivumaara, req.query.page)});
     
     connection.end();
 });
 
-app.get('/kategoriat/:id', (req, res) => {
-    res.render('kategoriat')
+app.get('/elokuva/:id', async (req, res) => {
+    const connection = await mariadb.createConnection(dbconfig);
+    const elokuvaid = req.params.id;
+
+    const elokuvat = await connection.query(`
+    SELECT category.name AS category_name, category.category_id AS category_id, title, description, release_year, language.name AS language, og_language.name AS og_language, rental_duration, rental_rate, length, replacement_cost, rating, special_features 
+    FROM film 
+    INNER JOIN film_category
+    ON film.film_id = film_category.film_id  
+    INNER JOIN category
+    ON film_category.category_id = category.category_id
+    INNER JOIN language
+    ON language.language_id = film.language_id
+    LEFT OUTER JOIN language AS og_language
+    ON og_language.language_id = film.original_language_id
+    WHERE film.film_id = ${elokuvaid};
+    `);
+    const nayttelijat = await connection.query(`
+    SELECT actor.actor_id as nayttelija_id, actor.first_name, actor.last_name FROM film_actor
+    INNER JOIN actor
+    ON film_actor.actor_id = actor.actor_id 
+    WHERE film_actor.film_id = ${elokuvaid};
+    `)
+
+    console.log(nayttelijat)
+
+    console.log(elokuvat)
+
+    res.render('elokuva', { elokuva: elokuvat[0], nayttelijat });
+    
+    connection.end();
 });
 
 app.all('*', (req, res) => {

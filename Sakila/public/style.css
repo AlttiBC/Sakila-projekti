@@ -99,6 +99,11 @@ aside {
     margin: 20px;
 }
 
+.elokuvakortti a {
+    text-decoration: none;
+    color: var(--väri4);
+}
+
 #näyttelijäkortit {
     display: flex;
     flex-wrap: wrap;
@@ -178,4 +183,79 @@ aside {
 #palaaetusivulle button:hover {
     cursor: pointer;
     opacity: 0.85;
+}
+
+.elokuvaflex {
+    display: flex;
+    text-transform: capitalize;
+}
+
+.elokuvaflex p {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#elokuva {
+    text-transform: capitalize;
+}
+
+#elokuva h1 {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}
+
+#elokuva > div {
+    margin: 9px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+#kategoria {
+    color: var(--väri4);
+    background-color: var(--väri2);
+    font-size: .975rem;
+    font-weight: 400;
+    align-items: center;
+    border: 1px solid transparent;
+    border-radius: 0.8rem;
+    cursor: pointer;
+    display: inline-flex;
+    padding: 0.35rem 1.05rem;
+}
+#kategoria:hover {
+    opacity: 0.89;
+}
+
+#elokuvanayttelijat a {
+    text-decoration: none;
+    color: var(--väri2);
+    margin: 11px;
+}
+
+.erikoisuus {
+    color: var(--väri4);
+    background-color: transparent;
+    border: #20aad8 2.5px solid;
+    font-size: .875rem;
+    font-weight: 400;
+    align-items: center;
+    border-radius: 0.8rem;
+    display: inline-flex;
+    padding: 0.3rem 0.85rem;
+}
+#katsolisaa {
+    color: var(--väri4);
+    background-color: rgba(159, 159, 159, 0.827);
+    font-size: .975rem;
+    font-weight: 400;
+    align-items: center;
+    border: 1px solid transparent;
+    border-radius: 0.8rem;
+    cursor: pointer;
+    display: inline-flex;
+    padding: 0.35rem 1.05rem;
+}
+
+#katsolisaa:hover {
+    background-color: rgba(159, 159, 159, 0.627);
 }

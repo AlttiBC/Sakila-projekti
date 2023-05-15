@@ -34,7 +34,7 @@
                 <% for(const elokuva of elokuvat) { %>
                     <div class="elokuvakortti">
                         <div class="flex">
-                            <h3><%= elokuva.title %></h3>
+                            <a href="/elokuva/<%= elokuva.film_id %>"><h3><%= elokuva.title %></h3></a>
                             <p><%= elokuva.rental_rate %>€ / <%= elokuva.rental_duration %> päivää</p>
                         </div>
                         <div class="flex">
@@ -42,6 +42,7 @@
                             <p><%= elokuva.rating %></p>
                         </div>
                         <p><%= elokuva.description %></p>
+                        <button id="katsolisaa"><a href="/elokuva/<%= elokuva.film_id %>">Katso lisää</a></button>
                     </div>
                 <% } %>
             </div>
